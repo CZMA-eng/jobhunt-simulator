@@ -104,7 +104,7 @@ func conductRound(p *players.Player, progress *InterviewProgress) bool {
 		utils.GetInput()
 		
 		// 随机判断是否正确
-		if rand.Intn(100) < 60 { // 60%概率答对
+		if rand.Intn(100) < 35 { // 35%概率答对
 			correctCount++
 			color.HiGreen("✓ 面试官微微点头")
 		} else {
