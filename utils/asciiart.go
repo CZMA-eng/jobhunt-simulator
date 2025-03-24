@@ -1,16 +1,15 @@
-package main
+package utils
 
 import (
 	"fmt"
 	"math/rand"
 	"os"
-	"jobhunt/utils"
 	"github.com/common-nighthawk/go-figure"
 	"github.com/fatih/color"
 )
 
-func showOpening() {
-	utils.ClearScreen()
+func ShowOpening() {
+	ClearScreen()
 	
 	// 破碎ASCII艺术字
 	fig := figure.NewFigure("JobHunt 2024", "doom", true)
@@ -24,11 +23,11 @@ func showOpening() {
 	
 	fmt.Println()
 	color.HiBlack("开始你的福报之旅...")
-	utils.WaitForInput()
+	WaitForInput()
 }
 
-func gameOver() {
-	utils.ClearScreen()
+func GameOver() {
+	ClearScreen()
 	
 	endings := []string{
 		`你成为了：

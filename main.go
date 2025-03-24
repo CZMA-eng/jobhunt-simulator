@@ -2,11 +2,12 @@ package main
 
 import (
 	"math/rand"
+	"jobhunt/utils"
 	"time"
 )
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	showOpening()
+	utils.ShowOpening()
 	mainLoop()
 }
