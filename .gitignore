@@ -1,0 +1,41 @@
+# 标准 Go 项目忽略规则
+bin/
+pkg/
+*.exe
+*.exe~
+*.so
+*.dll
+
+# IDE 配置文件
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 项目构建输出
+jobhunt-simulator  # 编译后的二进制文件
+dist/
+
+# 测试相关
+coverage.txt
+profile.out
+
+# 依赖管理
+go.sum
+
+# 环境文件
+.env
+.env.local
+
+# 日志文件
+*.log
+
+# macOS 系统文件
+.DS_Store
+
+# Windows 系统文件
+Thumbs.db
+
+# 特殊规则（针对本项目）
+/interviews/*.md  # 如果你希望面试题库不被提交
+/savegames/      # 预留的存档目录
