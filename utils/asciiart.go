@@ -38,26 +38,28 @@ func ShowOpening() {
 // ========== 酷炫组件 ==========
 
 func showCyberLoading(seconds int) {
-	colors := []color.Attribute{
-		color.FgHiMagenta,
-		color.FgHiBlue,
-		color.FgHiCyan,
-	}
-	frames := []string{
-		"[■□□□□□□□□□]",
-		"[■■■□□□□□□□]",
-		"[■■■■■□□□□□]",
-		"[■■■■■■■□□□]",
-		"[■■■■■■■■■□]",
-		"[■■■■■■■■■■]",
-	}
+    colors := []color.Attribute{
+        color.FgHiMagenta,
+        color.FgHiBlue,
+        color.FgHiCyan,
+    }
+    frames := []string{
+        "[■□□□□□□□□□]",
+        "[■■■□□□□□□□]",
+        "[■■■■■□□□□□]",
+        "[■■■■■■■□□□]",
+        "[■■■■■■■■■□]",
+        "[■■■■■■■■■■]",
+    }
 
-	for i := 0; i < len(frames); i++ {
-		c := colors[i%len(colors)]
-		color.New(c).Printf("\r%s 加载中... %d%%", frames[i], (i+1)*20)
-		time.Sleep(time.Duration(seconds) * time.Second / time.Duration(len(frames)))
-	}
-	fmt.Println()
+    for i := 0; i < len(frames); i++ {
+        c := colors[i%len(colors)]
+        // 修复百分比计算：(i+1)*100/len(frames)
+        percent := (i+1)*100/len(frames)
+        color.New(c).Printf("\r%s 加载中... %d%%", frames[i], percent)
+        time.Sleep(time.Duration(seconds)*time.Second/time.Duration(len(frames)))
+    }
+    fmt.Println()
 }
 
 func showMarketReport() {
