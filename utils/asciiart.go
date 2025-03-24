@@ -22,7 +22,7 @@ func ShowOpening() {
 	color.Yellow("  - 你的专业已被AI淘汰")
 	
 	fmt.Println()
-	color.HiBlack("开始你的福报之旅...")
+	color.HiBlack("开始你的福报之旅!!!")
 	WaitForInput()
 }
 
