@@ -75,15 +75,15 @@ func ShowStatus(p *Player) {
 	
 	fmt.Printf(`
 %s 当前状态 %s
-  理智值: %s %d
-  希望值: %s %d
-  生活费: %d
+  理智值: %s 
+  希望值: %s 
+  生活费: %s
   已投简历: %s%d份
   收到拒信: %s%d份
 `,
 		cyan("▛▜"), cyan("▙▟"),
-		sanityBar, p.Sanity,
-		hopeBar, p.Hope, p.Money,
+		sanityBar, 
+		hopeBar,  color.HiYellowString("￥%d", p.Money),  // 格式化货币,
 		yellow("≋"), p.ResumeCount,
 		color.HiRedString("✖"), p.Rejections,
 	)

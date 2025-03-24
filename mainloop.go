@@ -109,9 +109,9 @@ func mainLoop() {
 				headhunter(&player)
 			}
 		case "q":
-			color.Red("心态崩了吗？ 现实可能也没好哪里去哦～ :)")
-			fmt.Println()
-			return
+			if utils.QuitConfirm("确定要放弃这场人性试炼吗？") {
+				utils.QuitWithStyle()
+			}
 		default:
 			color.Red("无效操作！你的犹豫消耗了时间...")
 			player.Sanity -= 5
