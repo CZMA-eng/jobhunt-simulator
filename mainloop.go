@@ -2,13 +2,15 @@ package main
 
 import (
 	"fmt"
+	"jobhunt/boss"
+	"jobhunt/consumables"
+	"jobhunt/players"
+	"jobhunt/randomEvents"
+	"jobhunt/utils"
 	"math/rand"
 	"strings"
 	"time"
-	"jobhunt/consumables"
-	"jobhunt/players"
-	"jobhunt/utils"
-	"jobhunt/randomEvents"
+
 	"github.com/fatih/color"
 )
 
@@ -30,7 +32,7 @@ func mainLoop() {
 			time.Sleep(1 * time.Second)
 		},
 		"/suicide": func() {
-			secretEnding(&player)
+			boss.SecretEnding(&player)
 		},
 		"/hope": func() {
 			player.Hope = 100
@@ -99,7 +101,7 @@ func mainLoop() {
 		case "4":
 			consumables.BuyDrink(&player)
 		case "5":
-			bossMode(&player)
+			boss.EnterBossMode(&player)
 		case "6":
 			if player.Rejections > 10 {
 				rewriteResume(&player)
@@ -158,7 +160,7 @@ func headhunter(p *players.Player) {
 	color.Red("▓▓▓ 高端人才顾问 ▓▓▓")
 	color.White("服务费：998元/次")
 	color.White("正在接入专业顾问...")
-	fakeLoading(5)
+	utils.FakeLoading(5)
 	
 	advices := []string{
 		"你的要价是市场价的3倍",

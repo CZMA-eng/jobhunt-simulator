@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
-	"time"
 	"jobhunt/players"
 	"jobhunt/utils"
 	"github.com/fatih/color"
@@ -34,7 +33,7 @@ func checkEmail(p *players.Player) {
     }
     
     color.White("正在连接邮件服务器...")
-    fakeLoading(3)
+    utils.FakeLoading(3)
     
     // 确保至少处理1个面试邀请（如果有）
     processCount := 1
@@ -98,15 +97,3 @@ func getInterviewType() string {
     return types[rand.Intn(len(types))]
 }
 
-func fakeLoading(seconds int) {
-	fmt.Print("[")
-	for i := 0; i < 20; i++ {
-		fmt.Print(" ")
-	}
-	fmt.Print("]\r[")
-	
-	for i := 0; i < 20; i++ {
-		time.Sleep(time.Duration(seconds)*50 * time.Millisecond)
-		fmt.Print("█")
-	}
-}

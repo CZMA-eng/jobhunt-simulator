@@ -14,7 +14,7 @@ func massApply(p *players.Player) {
     p.ResumeCount += count
 
     color.Cyan("投递 %d 份简历...", count)
-    fakeLoading(2)
+    utils.FakeLoading(2)
 
     newOpportunities := 0
     for i := 0; i < count; i++ {
