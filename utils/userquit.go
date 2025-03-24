@@ -135,24 +135,14 @@ func QuitConfirm(prompt string) bool {
 	color.HiBlack("["+time.Now().Format("15:04:05")+"] ")
 	fmt.Print(color.HiRedString(prompt))
 	
-	// 创建动态光标
-	go func() {
-		cursors := []string{"_", "‾", "⌁", "⍢"}
-		for {
-			for _, c := range cursors {
-				fmt.Printf(color.HiRedString("\r%s [y/N] %s", prompt, c))
-				time.Sleep(300 * time.Millisecond)
-			}
-		}
-	}()
+    fmt.Println()
+    fmt.Printf(color.HiRedString("\r%s [y/N]", prompt))
 
 	// 获取输入
 	reader := bufio.NewReader(os.Stdin)
 	input, _ := reader.ReadString('\n')
 	input = strings.TrimSpace(strings.ToLower(input))
 
-	// 停止光标动画
-	ClearLine()
 
 	return input == "y" || input == "yes"
 }
