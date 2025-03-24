@@ -3,9 +3,11 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/fatih/color"
 )
@@ -123,4 +125,95 @@ func ShowDynamicInputIndicator(seconds int) {
 		}
 	}
 	fmt.Print("\r")
+}
+
+func PrintRainbowText(text string) {
+	colors := []*color.Color{
+		color.New(color.FgHiRed, color.BlinkSlow),    // 血红色闪烁
+		color.New(color.FgHiGreen, color.Bold),       // 韭菜绿
+		color.New(color.FgHiYellow, color.BgBlack),   // 福报黄
+		color.New(color.FgHiBlue, color.Underline),   // 蓝图蓝
+		color.New(color.FgHiMagenta, color.BlinkRapid),// 洗脑紫
+	}
+
+	rand.Seed(time.Now().UnixNano())
+	for _, c := range text {
+		// 随机字母大小写（模仿领导随意改需求）
+		char := string(c)
+		if rand.Intn(100) > 70 {
+			char = string(c ^ 32) // 通过ASCII异或32实现大小写切换
+		}
+
+		// 随机颜色+动态打字效果
+		colors[rand.Intn(len(colors))].Print(char)
+		time.Sleep(time.Duration(50 + rand.Intn(50)) * time.Millisecond)
+	}
+	fmt.Println()
+}
+
+func PrintPoisonText(text string) {
+	heartbeat := []rune{
+		'▁', '▂', '▃', '▄', '▅', '▆', '▇', '█',
+		'▇', '▆', '▅', '▄', '▃', '▂', '▁', ' ',
+	}
+
+	c := color.New(color.FgHiWhite, color.BgHiRed, color.BlinkRapid)
+	for i := 0; ; i++ {
+		// 生成随机偏移
+		offset := rand.Intn(utf8.RuneCountInString(text)+3) - 1
+		dirtyText := strings.Repeat(" ", offset) + text
+
+		// 添加心电图动画
+		c.Printf("%s %s", dirtyText, string(heartbeat[i%len(heartbeat)]))
+		time.Sleep(200 * time.Millisecond)
+		fmt.Print("\r\033[K") // 回退到行首并清空
+	}
+}
+
+func PrintProgressBar(seconds int, label string) {
+	// 伪代码生成器
+	codeWords := []string{"敏捷", "赋能", "抓手", "闭环", "迭代", "痛点", "链路", "生态"}
+
+	// 创建进度条协程
+	done := make(chan bool)
+	go func() {
+		width := 50
+		for i := 0; i <= width; i++ {
+			// 生成随机伪代码
+			var code strings.Builder
+			for j := 0; j < 5; j++ {
+				code.WriteString(codeWords[rand.Intn(len(codeWords))])
+				code.WriteString(fmt.Sprintf("%d.0 ", rand.Intn(10)))
+			}
+
+			// 打印动态进度条
+			fmt.Printf("\r%s [%s%s] %d%% %s",
+				label,
+				strings.Repeat("■", i),
+				strings.Repeat(" ", width-i),
+				i*2,
+				code.String(),
+			)
+			time.Sleep(time.Duration(seconds)*time.Second/time.Duration(width))
+		}
+		done <- true
+	}()
+
+	// 添加闪烁光标
+	go func() {
+		for {
+			select {
+			case <-done:
+				return
+			default:
+				fmt.Print("\033[?25l") // 隐藏光标
+				time.Sleep(500 * time.Millisecond)
+				fmt.Print("\033[?25h") // 显示光标
+				time.Sleep(500 * time.Millisecond)
+			}
+		}
+	}()
+
+	<-done
+	fmt.Println() // 换行结束
 }

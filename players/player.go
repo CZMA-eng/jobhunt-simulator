@@ -18,6 +18,10 @@ type Player struct {
 	Money          int // 生活费
 }
 
+func (p *Player) ModifyHope(realHope int) {
+	p.Hope = realHope
+}
+
 func (p *Player) ModifySanity(i int) {
 	p.Sanity = i
 }
