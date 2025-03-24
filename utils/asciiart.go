@@ -12,7 +12,7 @@ func ShowOpening() {
 	ClearScreen()
 	
 	// 破碎ASCII艺术字
-	fig := figure.NewFigure("JobHunt 2024", "doom", true)
+	fig := figure.NewFigure("JobHunt 2025", "doom", true)
 	fig.Print()
 	
 	fmt.Println()
