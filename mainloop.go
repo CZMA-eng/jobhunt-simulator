@@ -19,6 +19,7 @@ func mainLoop() {
 		ResumeCount: 0,
 		Rejections:  0,
 		IsGodMode:   false,
+		Money:       3000,
 	}
 
 	// 隐藏作弊码检测
@@ -43,14 +44,14 @@ func mainLoop() {
 		if player.Hope <= 0 {
 			color.HiRed("\n你的希望已归零...")
 			time.Sleep(2 * time.Second)
-			utils.GameOver()
+			utils.GameOver(&player)
 			break
 		}
 
 		if player.Sanity <= 0 {
 			color.HiMagenta("\n系统检测到精神崩溃...")
 			time.Sleep(2 * time.Second)
-			utils.GameOver()
+			utils.GameOver(&player)
 			break
 		}
 

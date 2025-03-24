@@ -18,6 +18,17 @@ type Player struct {
 	Money	     int // 生活费
 }
 
+// 确保Player实现GameOverData接口
+var _ utils.GameOverData = (*Player)(nil)
+
+func (p *Player) GetSanity() int      { return p.Sanity }
+func (p *Player) GetHope() int        { return p.Hope }
+func (p *Player) GetMoney() int       { return p.Money }
+func (p *Player) GetResumeCount() int { return p.ResumeCount }
+func (p *Player) GetRejections() int  { return p.Rejections }
+func (p *Player) GetGhostedCount() int { return p.GhostedCount }
+
+
 func (p *Player) Spend(amount int) bool {
     if p.IsGodMode {
         return true
@@ -64,8 +75,8 @@ func ShowStatus(p *Player) {
 	
 	fmt.Printf(`
 %s 当前状态 %s
-  理智值: %s %d%%
-  希望值: %s %d%%
+  理智值: %s %d
+  希望值: %s %d
   生活费: %d
   已投简历: %s%d份
   收到拒信: %s%d份
