@@ -5,12 +5,15 @@ import (
 	"math/rand"
 	"strings"
 	"time"
-
+	"jobhunt/consumables"
+	"jobhunt/players"
+	"jobhunt/utils"
+	"jobhunt/randomEvents"
 	"github.com/fatih/color"
 )
 
 func mainLoop() {
-	player := Player{
+	player := players.Player{
 		Sanity:      100,
 		Hope:        100,
 		ResumeCount: 0,
@@ -51,7 +54,7 @@ func mainLoop() {
 			break
 		}
 
-		showStatus(&player)
+		players.ShowStatus(&player)
 
 		// 动态选项系统（根据状态变化）
 		options := []string{
@@ -77,7 +80,7 @@ func mainLoop() {
 		}
 
 		fmt.Print("\n> ")
-		input := strings.TrimSpace(getInput())
+		input := strings.TrimSpace(utils.GetInput())
 
 		// 作弊码检测
 		if action, exists := cheatCodes[input]; exists {
@@ -93,7 +96,7 @@ func mainLoop() {
 		case "3":
 			checkEmail(&player)
 		case "4":
-			drinkMilkTea(&player)
+			consumables.BuyDrink(&player)
 		case "5":
 			bossMode(&player)
 		case "6":
@@ -105,7 +108,7 @@ func mainLoop() {
 				headhunter(&player)
 			}
 		case "q":
-			color.Red("你在现实生活中也quit算了 loooooooooser~ :)")
+			color.Red("心态崩了吗？ 现实可能也没好哪里去哦～ :)")
 			fmt.Println()
 			return
 		default:
@@ -116,14 +119,14 @@ func mainLoop() {
 
 		// 随机事件触发
 		if rand.Intn(100) > 80 {
-			randomEvent(&player)
+			randomEvents.RandomEvent(&player)
 		}
 	}
 }
 
 // 重写简历（自我欺骗）
-func rewriteResume(p *Player) {
-	clearScreen()
+func rewriteResume(p *players.Player) {
+	utils.ClearScreen()
 	
 	color.Cyan("第%d次重写简历...", p.Rejections)
 	color.White("正在生成技术栈：")
@@ -144,12 +147,12 @@ func rewriteResume(p *Player) {
 	color.Red("\n警告：检测到简历膨胀！")
 	p.Sanity -= 20
 	p.Hope += 10 // 虚假的希望
-	waitForInput()
+	utils.WaitForInput()
 }
 
 // 联系猎头（付费挨骂）
-func headhunter(p *Player) {
-	clearScreen()
+func headhunter(p *players.Player) {
+	utils.ClearScreen()
 	
 	color.Red("▓▓▓ 高端人才顾问 ▓▓▓")
 	color.White("服务费：998元/次")
@@ -168,42 +171,6 @@ func headhunter(p *Player) {
 	
 	p.Sanity -= 40
 	p.Hope -= 30
-	waitForInput()
+	utils.WaitForInput()
 }
 
-// 随机事件系统
-func randomEvent(p *Player) {
-	events := []func(*Player){
-		// 正能量事件（极少）
-		func(p *Player) {
-			if rand.Intn(100) > 95 { // 5%概率
-				color.HiGreen("\n[系统] 收到意外赞美！")
-				color.White("某HR在后台备注：")
-				color.Green("'这人简历虽然菜但照片挺好看'")
-				p.Hope += 20
-			}
-		},
-		// 负能量事件
-		func(p *Player) {
-			color.Red("\n[紧急] 班级群通知：")
-			color.White("你的室友 %s 拿到了%soffer",
-				color.HiGreenString("张三"),
-				color.HiYellowString("50万/年"))
-			p.Hope -= 25
-		},
-		func(p *Player) {
-			color.HiRed("\n[推送] 知乎热榜：")
-			color.White("《为什么说35岁程序员不如狗》")
-			color.HiBlack("阅读 10w+ · 收藏 5w+")
-			p.Sanity -= 15
-		},
-	}
-	
-	// 80%概率触发负事件
-	if rand.Intn(100) > 20 {
-		events[1+rand.Intn(len(events)-1)](p)
-	} else {
-		events[0](p)
-	}
-	waitForInput()
-}

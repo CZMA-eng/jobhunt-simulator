@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
-
+	"jobhunt/utils"
 	"github.com/common-nighthawk/go-figure"
 	"github.com/fatih/color"
 )
 
 func showOpening() {
-	clearScreen()
+	utils.ClearScreen()
 	
 	// 破碎ASCII艺术字
 	fig := figure.NewFigure("JobHunt 2024", "doom", true)
@@ -23,12 +23,12 @@ func showOpening() {
 	color.Yellow("  - 你的专业已被AI淘汰")
 	
 	fmt.Println()
-	color.HiBlack("按下回车键开始你的福报之旅...")
-	waitForInput()
+	color.HiBlack("开始你的福报之旅...")
+	utils.WaitForInput()
 }
 
 func gameOver() {
-	clearScreen()
+	utils.ClearScreen()
 	
 	endings := []string{
 		`你成为了：

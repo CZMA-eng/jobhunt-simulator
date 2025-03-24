@@ -1,9 +1,9 @@
-package main
+package players
 
 import (
 	"fmt"
 	"math/rand"
-
+	"jobhunt/utils"
 	"github.com/fatih/color"
 )
 
@@ -15,7 +15,23 @@ type Player struct {
     GhostedCount int // 新增：记录被默拒的数量
     PendingReplies int // 新增：待处理的回复数量
     IsGodMode    bool
+	Money	     int // 生活费
 }
+
+func (p *Player) Spend(amount int) bool {
+    if p.IsGodMode {
+        return true
+    }
+    
+    if p.Money >= amount {
+        p.Money -= amount
+        return true
+    }
+    
+    color.Red("余额不足！当前剩余：￥%d", p.Money)
+    return false
+}
+
 
 func (p *Player) ApplyDamage() {
 	if p.IsGodMode {
@@ -32,8 +48,8 @@ func (p *Player) ApplyDamage() {
 	}
 }
 
-func showStatus(p *Player) {
-	clearScreen()
+func ShowStatus(p *Player) {
+	utils.ClearScreen()
 	
 	// 创建颜色对象
 	sanityColor := color.New(color.FgHiCyan)
@@ -50,12 +66,13 @@ func showStatus(p *Player) {
 %s 当前状态 %s
   理智值: %s %d%%
   希望值: %s %d%%
+  生活费: %d
   已投简历: %s%d份
   收到拒信: %s%d份
 `,
 		cyan("▛▜"), cyan("▙▟"),
 		sanityBar, p.Sanity,
-		hopeBar, p.Hope,
+		hopeBar, p.Hope, p.Money,
 		yellow("≋"), p.ResumeCount,
 		color.HiRedString("✖"), p.Rejections,
 	)

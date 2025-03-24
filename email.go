@@ -5,7 +5,8 @@ import (
 	"math/rand"
 	"strings"
 	"time"
-
+	"jobhunt/players"
+	"jobhunt/utils"
 	"github.com/fatih/color"
 )
 
@@ -22,13 +23,13 @@ var rejectionMessages = []string{
 		color.HiGreenString("诚聘厕所所长（可转正）")),
 }
 
-func checkEmail(p *Player) {
-    clearScreen()
+func checkEmail(p *players.Player) {
+    utils.ClearScreen()
     
     if p.PendingReplies == 0 {
         color.White("收件箱空空如也...")
         color.HiBlack("(但你知道还有%d份简历被默拒)", p.GhostedCount)
-        waitForInput()
+        utils.WaitForInput()
         return
     }
     
@@ -61,14 +62,14 @@ func checkEmail(p *Player) {
     
     showEmailStats(p)
     p.ApplyDamage()
-    waitForInput()
+    utils.WaitForInput()
 }
 
-func handleInterviewInvite(p *Player) {
+func handleInterviewInvite(p *players.Player) {
     color.HiGreen("\n✓ 面试邀请：%s", getInterviewType())
     color.White("输入 'accept' 接受挑战 > ")
     
-    if strings.ToLower(getInput()) == "accept" {
+    if strings.ToLower(utils.GetInput()) == "accept" {
         startInterview(p)
     } else {
         color.Red("已自动拒绝机会")
@@ -79,7 +80,7 @@ func handleInterviewInvite(p *Player) {
     }
 }
 
-func showEmailStats(p *Player) {
+func showEmailStats(p *players.Player) {
     fmt.Printf("\n%s 待处理：%d | 默拒：%d | 总拒绝：%d\n",
         color.HiBlackString("统计："),
         p.PendingReplies,

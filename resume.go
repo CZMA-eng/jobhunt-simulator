@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"math/rand"
-
+	"jobhunt/players"
+	"jobhunt/utils"
 	"github.com/fatih/color"
 )
 
-func massApply(p *Player) {
-    clearScreen()
+func massApply(p *players.Player) {
+    utils.ClearScreen()
     count := rand.Intn(5) + 3
     p.ResumeCount += count
 
@@ -39,5 +40,5 @@ func massApply(p *Player) {
     }
 
     p.ApplyDamage()
-    waitForInput()
+    utils.WaitForInput()
 }

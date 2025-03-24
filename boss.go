@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"jobhunt/players"
+	"jobhunt/utils"
 	"math/rand"
 	"os"
 	"time"
@@ -9,15 +11,15 @@ import (
 	"github.com/fatih/color"
 )
 
-var bossEvents = []func(*Player){
+var bossEvents = []func(*players.Player){
 	hrGhosting,       // 已读不回
 	lowballOffer,     // 恶意压价
 	pyramidScheme,    // 传销式招聘
 	ageDiscrimination,// 年龄歧视
 }
 
-func bossMode(p *Player) {
-	clearScreen()
+func bossMode(p *players.Player) {
+	utils.ClearScreen()
 	
 	color.Red("▓▓▓▓▓▓▓ BOSS直聘 - 地狱模式 ▓▓▓▓▓▓▓")
 	fmt.Println()
@@ -33,11 +35,11 @@ func bossMode(p *Player) {
 	event := bossEvents[rand.Intn(len(bossEvents))]
 	event(p)
 	
-	waitForInput()
+	utils.WaitForInput()
 }
 
 // 事件1: 已读不回
-func hrGhosting(p *Player) {
+func hrGhosting(p *players.Player) {
 	color.Cyan("\n【神秘HR】")
 	color.White("查看你的简历")
 	color.HiBlack("最后上线时间: 2秒前")
@@ -52,7 +54,7 @@ func hrGhosting(p *Player) {
 }
 
 // 事件2: 恶意压价
-func lowballOffer(p *Player) {
+func lowballOffer(p *players.Player) {
 	color.Cyan("\n【创业公司CEO】")
 	color.White("我们非常欣赏你的潜力！")
 	color.White("但鉴于你：")
@@ -62,7 +64,7 @@ func lowballOffer(p *Player) {
 	
 	fmt.Println()
 	color.White("是否接受？ [y/n]")
-	if getInput() == "y" {
+	if utils.GetInput() == "y" {
 		color.Red("\n签约成功！获得成就：")
 		color.Red("██ 人矿认证 ██")
 		p.Hope = 0
@@ -73,7 +75,7 @@ func lowballOffer(p *Player) {
 }
 
 // 事件3: 传销式招聘
-func pyramidScheme(p *Player) {
+func pyramidScheme(p *players.Player) {
 	color.Cyan("\n【财富自由导师】")
 	color.White("加入我们的Web3.0生态矩阵！")
 	color.HiGreen("✓ 无需经验")
@@ -82,7 +84,7 @@ func pyramidScheme(p *Player) {
 	
 	fmt.Println()
 	color.White("输入'我要发财'立即加入> ")
-	if getInput() == "我要发财" {
+	if utils.GetInput() == "我要发财" {
 		color.HiYellow("\n恭喜成为第114514号代理！")
 		color.HiBlack("（你的通讯录已被上传）")
 		p.IsGodMode = true // 开启无敌模式（黑色幽默）
@@ -93,7 +95,7 @@ func pyramidScheme(p *Player) {
 }
 
 // 事件4: 年龄歧视（隐藏暴力机制）
-func ageDiscrimination(p *Player) {
+func ageDiscrimination(p *players.Player) {
 	color.Cyan("\n【系统提示】")
 	color.White("检测到你的年龄可能超过")
 	color.HiRed("25岁（程序员退休年龄）")
@@ -104,7 +106,7 @@ func ageDiscrimination(p *Player) {
 	color.White("[2] 我出生时就会写代码")
 	color.White("[3] 承认自己老了")
 	
-	switch getInput() {
+	switch utils.GetInput() {
 	case "1":
 		color.Red("\n实习经历过多，疑似跳槽倾向")
 	case "2":
@@ -120,8 +122,8 @@ func ageDiscrimination(p *Player) {
 }
 
 // 作弊码触发隐藏结局
-func secretEnding(p *Player) {
-	clearScreen()
+func secretEnding(p *players.Player) {
+	utils.ClearScreen()
 	color.HiMagenta(`
 ███████████████████████
    系统错误：404 NOT FOUND

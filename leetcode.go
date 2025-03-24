@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"jobhunt/players"
+	"jobhunt/utils"
 	"math/rand"
 
 	"github.com/fatih/color"
@@ -29,8 +31,8 @@ var leetcodeQuestions = []struct {
 	},
 }
 
-func leetCode(p *Player) {
-	clearScreen()
+func leetCode(p *players.Player) {
+	utils.ClearScreen()
 	
 	q := leetcodeQuestions[rand.Intn(len(leetcodeQuestions))]
 	color.Cyan(q.Problem + "\n")
@@ -40,10 +42,10 @@ func leetCode(p *Player) {
 	}
 	
 	// 假装有选择
-	getInput()
+	utils.GetInput()
 	
 	color.Red("\n运行结果：超出时间限制")
 	color.HiBlack("（你的解题思路已被ChatGPT取代）")
 	p.ApplyDamage()
-	waitForInput()
+	utils.WaitForInput()
 }

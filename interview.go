@@ -8,7 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-
+	"jobhunt/players"
+	"jobhunt/utils"
 	"github.com/fatih/color"
 )
 
@@ -30,8 +31,8 @@ func NewInterview() *InterviewProgress {
 	}
 }
 
-func startInterview(p *Player) {
-	clearScreen()
+func startInterview(p *players.Player) {
+	utils.ClearScreen()
 	progress := NewInterview()
 	color.HiMagenta("▓▓▓ 面试炼狱 ▓▓▓")
 	color.HiBlack("（共%d轮面试）", progress.MaxRounds)
@@ -41,7 +42,7 @@ func startInterview(p *Player) {
 			// 本轮未通过
 			color.Red("\n很遗憾，你在第%d轮被淘汰", progress.CurrentRound)
 			p.Rejections++
-			waitForInput()
+			utils.WaitForInput()
 			return
 		}
 		
@@ -56,11 +57,11 @@ func startInterview(p *Player) {
 	color.HiGreen("\n奇迹发生！你通过了所有面试！")
 	color.HiBlack("（HR说还要等老板最终审批）")
 	p.Hope += 50
-	waitForInput()
+	utils.WaitForInput()
 }
 
-func conductRound(p *Player, progress *InterviewProgress) bool {
-	clearScreen()
+func conductRound(p *players.Player, progress *InterviewProgress) bool {
+	utils.ClearScreen()
 	
 	var roundType string
 	var questions []string
@@ -100,7 +101,7 @@ func conductRound(p *Player, progress *InterviewProgress) bool {
 		color.White(q)
 		
 		fmt.Print("\n你的回答 > ")
-		getInput()
+		utils.GetInput()
 		
 		// 随机判断是否正确
 		if rand.Intn(100) < 60 { // 60%概率答对
