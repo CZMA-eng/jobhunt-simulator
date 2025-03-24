@@ -60,6 +60,7 @@ func mainLoop() {
 			color.HiBlueString("[3] 查看邮箱（直面现实）"),
 			color.HiBlueString("[4] 喝奶茶（短暂多巴胺）"),
 			color.HiRedString("[5] 打开BOSS直聘（地狱模式）"),
+			color.HiGreenString("[q] 退出游戏"),
 		}
 
 		// 特殊状态选项
@@ -103,6 +104,10 @@ func mainLoop() {
 			if player.ResumeCount > 50 {
 				headhunter(&player)
 			}
+		case "q":
+			color.Red("你在现实生活中也quit算了 loooooooooser~ :)")
+			fmt.Println()
+			return
 		default:
 			color.Red("无效操作！你的犹豫消耗了时间...")
 			player.Sanity -= 5
